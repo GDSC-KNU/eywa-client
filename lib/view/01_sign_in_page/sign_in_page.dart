@@ -30,7 +30,7 @@ class SignInPage extends StatelessWidget {
       tag: "logo",
       child: Image.asset(
         "assets/images/logo.jpg",
-        width: 221.w,
+        width: 250.w,
       ),
     );
   }
@@ -40,7 +40,7 @@ class SignInPage extends StatelessWidget {
       onPressed: () {
         Get.find<UserController>().googleLogin().then((value){
           if (value) {
-            Get.find<UserController>().getPosition();
+            Get.find<UserController>().signInSuccess();
             Get.offAllNamed("/home");
           }
         });

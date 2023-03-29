@@ -6,6 +6,7 @@ import 'package:eywa_client/view_model/home_page_controller.dart';
 import 'package:eywa_client/view_model/search_page_view_controller.dart';
 import 'package:eywa_client/view_model/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,61 +26,62 @@ class Eywa extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (context, child) {
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
         return GetMaterialApp(
           title: 'Eywa',
           debugShowCheckedModeBanner: false,
-            initialRoute: "/",
-            initialBinding: BindingsBuilder(() {
-              Get.put(UserController());
-            }),
+          initialRoute: "/",
+          initialBinding: BindingsBuilder(() {
+            Get.put(UserController());
+          }),
 
-            getPages: [
-              //Loading Page
-              GetPage(
-                name: "/",
-                page: () => const LoadingPage(),
-              ),
+          getPages: [
+            //Loading Page
+            GetPage(
+              name: "/",
+              page: () => const LoadingPage(),
+            ),
 
-              //Sign In Page
-              GetPage(
-                name: "/sign_in",
-                page: () => const SignInPage(),
-              ),
+            //Sign In Page
+            GetPage(
+              name: "/sign_in",
+              page: () => const SignInPage(),
+            ),
 
-              //Home Page
-              GetPage(
-                name: "/home",
-                page: () => const HomePage(),
-                binding: BindingsBuilder(() {
-                  Get.put(HomePageController());
-                  Get.put(FieldGuidePageController());
-                  Get.put(SearchPageViewController());
-                }),
-              ),
+            //Home Page
+            GetPage(
+              name: "/home",
+              page: () => const HomePage(),
+              binding: BindingsBuilder(() {
+                Get.put(HomePageController());
+                Get.put(FieldGuidePageController());
+                Get.put(SearchPageViewController());
+              }),
+            ),
 
-              //Field Guide Page
-              GetPage(
-                name: "/field_guide",
-                page: () => const FieldGuidePage(),
-                transition: Transition.downToUp,
-                transitionDuration: Duration(milliseconds: 100),
-              ),
+            //Field Guide Page
+            GetPage(
+              name: "/field_guide",
+              page: () => const FieldGuidePage(),
+              transition: Transition.downToUp,
+              transitionDuration: Duration(milliseconds: 100),
+            ),
 
-              //Search Page
-              GetPage(
-                name: "/search_result",
-                page: () => const SearchResultPage(),
-                transition: Transition.downToUp,
-                transitionDuration: Duration(milliseconds: 100),
-              ),
+            //Search Page
+            GetPage(
+              name: "/search_result",
+              page: () => const SearchResultPage(),
+              transition: Transition.downToUp,
+              transitionDuration: Duration(milliseconds: 100),
+            ),
 
-              // GetPage(
-              //   name: "/<Name>",
-              //   page: () => Widget(),
-              //   binding: BindingsBuilder(() {
-              //   }),
-              // ),
-            ],
+            // GetPage(
+            //   name: "/<Name>",
+            //   page: () => Widget(),
+            //   binding: BindingsBuilder(() {
+            //   }),
+            // ),
+          ],
           theme: ThemeData(
             fontFamily: "noto_sans",
 

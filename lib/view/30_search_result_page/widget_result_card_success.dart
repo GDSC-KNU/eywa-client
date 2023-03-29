@@ -1,6 +1,7 @@
 import 'package:cross_file_image/cross_file_image.dart';
-import 'package:eywa_client/view/50_detail_page/detail_animal_page.dart';
-import 'package:eywa_client/view/50_detail_page/detail_plant_page.dart';
+import 'package:eywa_client/view/common_widgets/detail_animal_page.dart';
+import 'package:eywa_client/view/common_widgets/detail_plant_page.dart';
+import 'package:eywa_client/view/common_widgets/toast_message.dart';
 import 'package:eywa_client/view_model/home_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,20 +53,23 @@ Widget _image(String imagePath) => Hero(
   ),
 );
 
-Widget _name(BuildContext context, String name) => FittedBox(
-  child: Text(
-    name,
-    style: TextStyle(
-      color: context.theme.backgroundColor,
-      fontSize: 25.sp,
-      fontWeight: FontWeight.w600,
-      shadows: [
-        Shadow(
-          color: Colors.black.withOpacity(0.25),
-          blurRadius: 7,
-          offset: Offset(0, 4), // changes position of shadow
-        ),
-      ],
+Widget _name(BuildContext context, String name) => Container(
+  width: 269.w,
+  child: FittedBox(
+    child: Text(
+      name,
+      style: TextStyle(
+        color: context.theme.backgroundColor,
+        fontSize: 25.sp,
+        fontWeight: FontWeight.w600,
+        shadows: [
+          Shadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 7,
+            offset: Offset(0, 4), // changes position of shadow
+          ),
+        ],
+      ),
     ),
   ),
 );
@@ -121,8 +125,14 @@ Widget _button(BuildContext context) => Container(
           Get.find<SearchPageViewController>().registerToServer();
           Get.find<SearchPageViewController>().reportToServer().then(
             (value){
-              Get.find<HomePageController>().getReports();
-              Get.toNamed("/home");
+              if(value) {
+                Get.find<HomePageController>().getReports();
+                Get.offAndToNamed("/home");
+                showToastMessage(message: "Report Success", backgroundColor: context.theme.primaryColor);
+              }
+              else{
+                showToastMessage(message: "Report Failed", backgroundColor: context.theme.primaryColor);
+              }
             }
           );
         },
